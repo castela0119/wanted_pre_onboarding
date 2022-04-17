@@ -1,11 +1,13 @@
 import json
-
 from django.shortcuts import render
+
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from apps.user.models import User
 from apps.products.models import Products
 from apps.products.serializers import ProductsSerializer, ProdcutFundingSerializer
+
 
 from django.http  import JsonResponse
 
@@ -23,6 +25,17 @@ class ProductAPI(APIView):
             "products":products
         }
         return Response(serializser.data)
+
+    def post(self, request, format=None):
+        """
+        상품을 등록합니다.
+        """
+        serializer = ProductsSerializer(data=request.data)
+        if serializer.is_valid(): #유효성 검사
+            serializer.save() # 저장
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class ProductDetailAPI(APIView):
 
