@@ -12,7 +12,8 @@ from django.http  import JsonResponse
 from rest_framework.filters import SearchFilter
 from rest_framework import viewsets
 from .utills import serialize_query_params
-from django_filters.rest_framework import DjangoFilterBackend
+# from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import generics
 
 # Create your views here.
 
@@ -22,10 +23,12 @@ from django_filters.rest_framework import DjangoFilterBackend
 #     filter_backends = [SearchFilter] 
 #     search_fields = ('title',)
 
-class ProductsViewSet(viewsets.ModelViewSet):
+class ProductsViewSet(generics.ListCreateAPIView):
     queryset = Products.objects.all()
     serializer_class = ProductsSerializer
-    filter_backends = [DjangoFilterBackend] # DjangoFilterBackend 로 필터링 백엔드 등록
+    # filter_backends = [DjangoFilterBackend] # DjangoFilterBackend 로 필터링 백엔드 등록
+    filter_backends = (SearchFilter,)
+    search_fields = ['title', 'description']
     filterset_fields = ['title', 'description'] # 필터링할 필드 리스트 지정
 
 class ProductAPI(APIView):
