@@ -8,12 +8,28 @@ from apps.user.models import User
 from apps.products.models import Products
 from apps.products.serializers import ProductsSerializer, ProdcutFundingSerializer
 
-
 from django.http  import JsonResponse
+from rest_framework.filters import SearchFilter
+from rest_framework import viewsets
+from .utills import serialize_query_params
+from django_filters.rest_framework import DjangoFilterBackend
 
 # Create your views here.
+
+# class ProductsViewSet(viewsets.ModelViewSet): 
+#     queryset = Products.objects.all() 
+#     serializer_class = ProductsSerializer 
+#     filter_backends = [SearchFilter] 
+#     search_fields = ('title',)
+
+class ProductsViewSet(viewsets.ModelViewSet):
+    queryset = Products.objects.all()
+    serializer_class = ProductsSerializer
+    filter_backends = [DjangoFilterBackend] # DjangoFilterBackend 로 필터링 백엔드 등록
+    filterset_fields = ['title', 'description'] # 필터링할 필드 리스트 지정
+
 class ProductAPI(APIView):
-    
+
     def get(self, request, format=None):
         """
         Return a list of all products.
