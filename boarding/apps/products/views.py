@@ -9,7 +9,7 @@ from apps.products.models import Products
 from apps.products.serializers import ProductsSerializer, ProdcutFundingSerializer
 
 from django.http  import JsonResponse
-from rest_framework.filters import SearchFilter
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework import viewsets
 from .utills import serialize_query_params
 # from django_filters.rest_framework import DjangoFilterBackend
@@ -27,9 +27,19 @@ class ProductsViewSet(generics.ListCreateAPIView):
     queryset = Products.objects.all()
     serializer_class = ProductsSerializer
     # filter_backends = [DjangoFilterBackend] # DjangoFilterBackend 로 필터링 백엔드 등록
-    filter_backends = (SearchFilter,)
+    filter_backends = (SearchFilter, OrderingFilter)
     search_fields = ['title', 'description']
     filterset_fields = ['title', 'description'] # 필터링할 필드 리스트 지정
+
+    ordering_fields = ['created_at', 'total_funding'] # ?ordering= -> 정렬을 허용할 필드의 화이트 리스트. 미지정 시에 serializer_class에 지정된 필드들.
+    ordering = ['created_at', 'total_funding'] # 디폴트 정렬을 지정
+
+# class ProductsOrderingViewSet(generics.ListCreateAPIView):
+#     queryset = Products.objects.all()
+#     serializer_class = ProductsSerializer
+
+#     filter_backends = [OrderingFilter]
+    
 
 class ProductAPI(APIView):
 
