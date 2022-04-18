@@ -25,7 +25,7 @@
 > python3 manage.py migrate
 
 # 서버 실행
-> python manage.py runserver
+> python3 manage.py runserver
 ```
 
 ## 3. 엔드포인트 설계
