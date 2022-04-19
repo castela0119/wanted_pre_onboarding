@@ -38,11 +38,11 @@
 | 기능 | method | url | 비고 |
 |------|---|---| --- |
 | 상품 등록 | POST | http://127.0.0.1:8000/products/ | - |
-| 특정 상품 수정  | POST | http://127.0.0.1:8000/products/<int:product_id> | 필드에 맞게 작성하면 수정됩니다. () |
-| 특정 상품 신청하기  | POST | http://127.0.0.1:8000/products/<int:product_id>/apply | 로그인된 user를 가져와 applicants로 추가합니다. |
+| 특정 상품 수정  | POST | http://127.0.0.1:8000/products/\<int:product_id\> | 필드에 맞게 작성하면 수정됩니다. () |
+| 특정 상품 신청하기  | POST | http://127.0.0.1:8000/products/\<int:product_id\>/apply | 로그인된 user를 가져와 applicants로 추가합니다. |
 | 검색으로 상품 조회  | GET | http://127.0.0.1:8000/products?search=테니스 | title 또는 description 에 해당 단어를 검색해서 찾습니다. |
 | 전체 상품 조회  | GET | http://127.0.0.1:8000/products | - |
-| 특정 상품에 펀딩하기  | POST | http://127.0.0.1:8000/products/<int:product_id>/funding | 상품에 정해진 once_funding(1회펀딩액)만큼 펀딩됩니다. |
+| 특정 상품에 펀딩하기  | POST | http://127.0.0.1:8000/products/\<int:product_id\>/funding | 상품에 정해진 once_funding(1회펀딩액)만큼 펀딩됩니다. |
 | 정렬으로 상품 조회 | POST | http://127.0.0.1:8000/products?ordering=total_funding | id 또는 total_funding(총 펀딩금액)으로 정렬됩니다. |
 
 
