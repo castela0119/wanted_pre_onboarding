@@ -4,10 +4,14 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import BaseUserManager
 
+from apps.products.models import Products
+
 class User(AbstractUser):
    email = models.EmailField(verbose_name='email', unique=True)
    username = models.CharField(verbose_name='username', max_length=25)
    password = models.CharField(max_length=25)
+
+   products = models.ManyToManyField(Products, default={})
 
    created_at = models.DateField(default=timezone.now)
 

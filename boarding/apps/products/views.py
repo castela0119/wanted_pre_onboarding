@@ -1,27 +1,33 @@
 import json
-from django.shortcuts import render
+from django.http  import JsonResponse
 
-from rest_framework import status
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from apps.user.models import User
 from apps.products.models import Products
 from apps.products.serializers import ProductsSerializer, ProdcutFundingSerializer
 
-from django.http  import JsonResponse
-from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework import viewsets
-from .utills import serialize_query_params
-# from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import status
 from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.filters import SearchFilter, OrderingFilter
+
+# from django_filters.rest_framework import DjangoFilterBackend
 
 # Create your views here.
+class ProductApplyAPI(APIView):
 
-# class ProductsViewSet(viewsets.ModelViewSet): 
-#     queryset = Products.objects.all() 
-#     serializer_class = ProductsSerializer 
-#     filter_backends = [SearchFilter] 
-#     search_fields = ('title',)
+    def post(self, request, product_id):
+
+        user = self.request.user
+        product = Products.objects.get(pk=product_id)
+
+        product.applicants.add(user.id)
+        data = {
+            'message' : f"{user}님 신청 완료 되었습니다."
+        }
+
+        return Response(data)
+        
 
 class ProductsViewSet(generics.ListCreateAPIView):
     queryset = Products.objects.all()
@@ -34,11 +40,6 @@ class ProductsViewSet(generics.ListCreateAPIView):
     ordering_fields = ['created_at', 'total_funding'] # ?ordering= -> 정렬을 허용할 필드의 화이트 리스트. 미지정 시에 serializer_class에 지정된 필드들.
     ordering = ['created_at', 'total_funding'] # 디폴트 정렬을 지정
 
-# class ProductsOrderingViewSet(generics.ListCreateAPIView):
-#     queryset = Products.objects.all()
-#     serializer_class = ProductsSerializer
-
-#     filter_backends = [OrderingFilter]
     
 
 class ProductAPI(APIView):
