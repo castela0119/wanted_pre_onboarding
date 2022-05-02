@@ -20,6 +20,12 @@
 
 # 가상환경 비활성화
 > deactivate
+
+# 패키지 목록 출력
+> pip freeze
+
+# 패키지 목록을 requirements.txt에 저장
+> 
 ```
 
 ## 2. 모델 생성 및 서버 실행
