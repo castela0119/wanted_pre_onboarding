@@ -25,7 +25,7 @@
 > pip freeze
 
 # 패키지 목록을 requirements.txt에 저장
-> 
+> pip freeze > requirements.txt
 ```
 
 ## 2. 모델 생성 및 서버 실행
